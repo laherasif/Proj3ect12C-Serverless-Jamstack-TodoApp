@@ -1,20 +1,8 @@
 import React from 'react'
 import Skeleton from "react-loading-skeleton";
-import { gql, useQuery, useMutation } from '@apollo/client';
 
 function Card() {
 
-    const GET_TODOS = gql`
-{
-    Todos {
-        task
-        id
-        status
-    }
-}
-`
-
-    const { loading, error, data } = useQuery(GET_TODOS);
 
 
     return (
@@ -26,11 +14,11 @@ function Card() {
 
                             {
                                  Array(9)
-                                .fill()
-                                .map((item, index) =>  {
+                                .fill({start : 0 , end : 100})
+                                .map((ind:number) =>  {
 
                                     return (
-                                        <ul id="list-items" >
+                                        <ul id="list-items" key={ind}>
                                             <li>
                                                 <Skeleton height={20} />
                                             </li>

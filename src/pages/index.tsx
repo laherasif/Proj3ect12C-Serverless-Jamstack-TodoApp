@@ -30,18 +30,9 @@ mutation delTodo($id: String!) {
   }
 }`;
 
-const UPDATE_TODO = gql`
-mutation updateTodo($id: ID! , $task : String! , $status: boolean!) {
-  updateTodo(id: $id , task : $task , status: $task) {
-    id 
-    task
-    status
-  }
-}`;
 
 
 export default function Home() {
-    const [Save, setSave] = useState(false)
     const [Loading , setLoading] = useState(false)
     let inputText;
 
@@ -70,19 +61,7 @@ export default function Home() {
     }
 
 
-    const [updateTodo] = useMutation(UPDATE_TODO)
-    const updateTask = (id, task, status) => {
-        updateTodo({
-            variables: {
-                id: id,
-                task: task,
-                status: status
-            },
-            refetchQueries: [{ query: GET_TODOS }]
-        })
-
-    }
-
+  
 
     const { loading, error, data } = useQuery(GET_TODOS);
 
@@ -96,7 +75,6 @@ export default function Home() {
 
 
 
-    console.log("SAVE DATA IN STATE", data)
 
     return (
         <>
@@ -111,7 +89,7 @@ export default function Home() {
                                         inputText = node;
                                     }} placeholder="What will you do today?" />
                                 </div>
-                                <button className="add-items main-search-button" onClick={addTask}>ADD</button>
+                                <button className="add-items main-search-button"  onClick={addTask}>ADD</button>
                             </div>
                         </div>
                     </div>
@@ -125,9 +103,9 @@ export default function Home() {
                                 { Loading 
                                 
                                 ?  
-                                  data.Todos.map((todo, index: number) => {
+                                  data.Todos.map(( ind: number) => {
                                       return (
-                                        <ul id="list-items" >
+                                        <ul id="list-items" key={ind} >
                                             
                                             
                                             <li>
@@ -144,10 +122,10 @@ export default function Home() {
                                 :
                                 
 
-                                !loading && data ? data.Todos.map((todo, index: number) => {
+                                !loading && data && data.length > 0  ? data.Todos.map((todo) => {
 
                                     return (
-                                        <ul id="list-items" key={index} >
+                                        <ul id="list-items" key={todo.id} >
                                             
                                             
                                             <li>{todo.task}
@@ -162,7 +140,7 @@ export default function Home() {
 
                                     )
                                 })
-                                : null
+                                : "Error are occuring due to connection"
 
                                 }
                             </div>
