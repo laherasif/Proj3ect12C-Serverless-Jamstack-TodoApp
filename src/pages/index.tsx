@@ -100,27 +100,7 @@ export default function Home() {
                     <div className="col-md-12">
                         <div className="main-todo-input-wrap">
                             <div className="main-todo-input fl-wrap todo-listing">
-                                { !Loading 
-                                
-                                ?  
-                                  data.Todos.map(( ind: number) => {
-                                      return (
-                                        <ul id="list-items" key={ind} >
-                                            
-                                            
-                                            <li>
-                                                <Skeleton height={20}/>
-                                            </li>
-                                       
-                                
-
-
-                                        </ul>
-                                      )
-                                      }) 
-
-                                :
-                                
+                                { 
 
                                 !loading && data   ? data.Todos.map((todo) => {
 
