@@ -27,7 +27,7 @@ var adminClient = new faunadb.Client({ secret: 'fnAD6OD-QyACBcMFsavYmk2L8OkTxK5z
 
 const resolvers = {
   Query: {
-    Todos: async (root, args, context) => {
+    Todos: async () => {
       try {
         const result = await adminClient.query(
           q.Map(
