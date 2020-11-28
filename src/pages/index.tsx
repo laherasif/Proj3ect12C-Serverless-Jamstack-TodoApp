@@ -122,7 +122,7 @@ export default function Home() {
                                 :
                                 
 
-                                !loading && data && data.length > 0  ? data.Todos.map((todo) => {
+                                !loading && data   ? data.Todos.map((todo) => {
 
                                     return (
                                         <ul id="list-items" key={todo.id} >
@@ -140,7 +140,7 @@ export default function Home() {
 
                                     )
                                 })
-                                : "Error are occuring due to connection"
+                                : null
 
                                 }
                             </div>
