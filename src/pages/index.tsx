@@ -33,7 +33,15 @@ mutation delTodo($id: String!) {
 
 
 export default function Home() {
+    const { loading, error, data } = useQuery(GET_TODOS);
+
     const [Loading , setLoading] = useState(false)
+    useEffect(()=>{
+        setTimeout(() => {
+            setLoading(false)
+        }, 3000);
+    },[data ? Loading : null])
+    
     let inputText;
 
     const [addTodo ] = useMutation(ADD_TODO);
@@ -46,6 +54,9 @@ export default function Home() {
             refetchQueries: [{ query: GET_TODOS }]
         })
         setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+        }, 2000);
         inputText.value = "";
     }
 
@@ -63,18 +74,11 @@ export default function Home() {
 
   
 
-    const { loading, error, data } = useQuery(GET_TODOS);
 
-  useEffect(()=> {
-     return () => {
-         setTimeout(()=>{
-             setLoading(false)
-         },3000)
-     }
-  })
+ 
 
 
-
+console.log("sate" , Loading)
 
     return (
         <>
@@ -100,9 +104,26 @@ export default function Home() {
                     <div className="col-md-12">
                         <div className="main-todo-input-wrap">
                             <div className="main-todo-input fl-wrap todo-listing">
-                                { 
+                                { Loading
+                                
+                                ?  
+                                  data.Todos.map((item , index) => {
+                                      return (
+                                        <ul id="list-items" key={index} >
+                                            
+                                            
+                                            <li>
+                                                <Skeleton height={20}/>
+                                            </li>
 
-                                !loading && data   ? data.Todos.map((todo) => {
+                                        </ul>
+                                      )
+                                      }) 
+
+                                :
+                                
+
+                                !loading && data ? data.Todos.map((todo) => {
 
                                     return (
                                         <ul id="list-items" key={todo.id} >
@@ -126,6 +147,10 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div style={{display:'flex' , justifyContent:'center' , color:'red'}}>
+                { error ? <h2>Error : Please Check your internet connection</h2> : null }
+
                 </div>
             
         </div>

@@ -36,7 +36,6 @@ const resolvers = {
           )
         )
 
-     console.log("result" , result)
         return result.data.map(d => {
           // let v = d.ref;
           // let r = v.toString().split(/[, ]/).pop()
